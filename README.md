@@ -2,6 +2,11 @@
 
 [🇬🇧 English](#english) | [🇷🇺 Русский](#russian)
 
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://anfixit.github.io/vibe-python-engineering-handbook/)
+![Python](https://img.shields.io/badge/python-3.12+-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-success)
+
 ---
 
 # English
