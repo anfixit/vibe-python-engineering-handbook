@@ -1,0 +1,47 @@
+site_name: Python Engineering Handbook
+site_description: Production-grade Python engineering standards and best practices
+
+theme:
+  name: material
+  language: ru
+
+plugins:
+  - search
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Главная: index.md
+
+  - Основы:
+      - Стиль кода: style-guide.md
+      - Безопасность: security.md
+      - Архитектура: architecture.md
+      - Асинхронное программирование: async.md
+
+  - Фреймворки:
+      - FastAPI: fastapi.md
+      - Django / DRF: django.md
+      - Aiogram: aiogram.md
+
+  - Инженерные практики:
+      - Тестирование: testing.md
+      - Git Workflow: git.md
+      - HTTP-клиенты: http-clients.md
+
+  - Эксплуатация:
+      - Деплой и продакшн: deployment.md
+      - Мониторинг: monitoring.md
+      - Кеширование: caching.md
+
+  - Проектирование API:
+      - Стандартизация API и идемпотентность: api-design.md
+
+  - Инструменты разработки:
+      - Tooling: tooling.md
