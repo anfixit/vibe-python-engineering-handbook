@@ -225,6 +225,10 @@ examples/
 
 ---
 
+## Documentation Preview
+
+![Documentation Preview](assets/docs-preview.png)
+
 ## License
 
 MIT License
