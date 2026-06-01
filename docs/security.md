@@ -1,6 +1,6 @@
-## 3. Секреты и конфигурация
+## Секреты и конфигурация
 
-### 3.1 Иерархия надёжности (от лучшего к худшему)
+### Иерархия надёжности (от лучшего к худшему)
 
 ```
 1. Менеджер секретов (Vault, AWS Secrets Manager) ← ЛУЧШИЙ
@@ -10,7 +10,7 @@
 5. Захардкоженные значения                     ← ЗАПРЕЩЕНО
 ```
 
-### 3.2 Правильная работа с `.env`
+### Правильная работа с `.env`
 
 **`.env` — никогда не попадает в git.**
 
@@ -46,7 +46,7 @@ BOT_TOKEN = '1234567890:AABBcc...'
 DATABASE_URL = 'postgresql://admin:password@prod-server/db'
 ```
 
-### 3.3 Pydantic Settings (рекомендованный способ)
+### Pydantic Settings (рекомендованный способ)
 
 Устанавливай: `uv add pydantic-settings`
 
@@ -138,7 +138,7 @@ db_url = str(settings.database_url)
 **Почему `SecretStr`:** значение не попадает в логи.
 При `print(settings.bot_token)` выведется `**********`.
 
-### 3.4 Проверка наличия переменных при старте
+### Проверка наличия переменных при старте
 
 Pydantic Settings сам выбрасывает `ValidationError`, если
 обязательные поля (без `default`) не заполнены, а также
@@ -162,9 +162,9 @@ def validate_settings() -> None:
 
 ---
 
-## 7. Обработка ошибок и логирование
+## Обработка ошибок и логирование
 
-### 7.1 Исключения
+### Исключения
 
 ```python
 # ✅ Конкретные исключения
@@ -191,7 +191,7 @@ except Exception:
 Только строки, которые **могут** вызвать исключение,
 помещаются в `try`. Не весь блок кода.
 
-### 7.2 Кастомные исключения
+### Кастомные исключения
 
 ```python
 # exceptions.py
@@ -238,7 +238,7 @@ class InsufficientStockError(AppError):
     """Недостаточно товара на складе."""
 ```
 
-### 7.3 Логирование
+### Логирование
 
 ```python
 # logger.py
@@ -307,7 +307,7 @@ except SomeError:
     # logger.exception автоматически добавляет traceback
 ```
 
-### 7.4 Structured logging для продакшна
+### Structured logging для продакшна
 
 Раздел 7.3 выше — достаточен для скриптов, CLI-утилит
 и простых ботов. Но для веб-приложений и API в продакшне,
@@ -375,9 +375,9 @@ setup_structlog(json_output=not settings.debug)
 
 ---
 
-## 8. Безопасность
+## Безопасность
 
-### 8.1 Пароли: Argon2id
+### Пароли: Argon2id
 
 ```python
 # uv add argon2-cffi
@@ -407,7 +407,7 @@ def verify_password(hashed: str, plain: str) -> bool:
 **Никогда:** MD5, SHA1, SHA256 для паролей. Только Argon2id,
 bcrypt или scrypt.
 
-### 8.2 Валидация входных данных (Pydantic v2)
+### Валидация входных данных (Pydantic v2)
 
 ```python
 from pydantic import BaseModel, EmailStr, Field, field_validator
@@ -438,7 +438,7 @@ class UserCreate(BaseModel):
 **Внимание:** `@validator` — это Pydantic v1 API,
 deprecated в v2. Используй `@field_validator`.
 
-### 8.3 Защита API
+### Защита API
 
 ```python
 from datetime import datetime, timedelta, timezone
@@ -464,7 +464,7 @@ payload = {
 В новых проектах используй `datetime.now(timezone.utc)`.
 См. раздел 8.12 «Datetime: всегда timezone-aware».
 
-### 8.4 Rate limiting (FastAPI пример)
+### Rate limiting (FastAPI пример)
 
 ```python
 from slowapi import Limiter
@@ -483,7 +483,7 @@ Rate limiting нужен **не только на логин** — на все
 auth-эндпоинты: регистрацию, сброс пароля, подтверждение
 email, refresh токена.
 
-### 8.5 CORS
+### CORS
 
 CORS настраивается неправильно чаще, чем любой другой
 заголовок. Главная ошибка — `allow_origins=["*"]`
@@ -540,7 +540,7 @@ CORS_ALLOW_CREDENTIALS = True
 **публичных read-only API** без авторизации.
 Если есть куки или `Authorization` — только явные домены.
 
-### 8.6 CSP (Content Security Policy)
+### CSP (Content Security Policy)
 
 CSP-заголовки — это второй рубеж защиты от XSS.
 Браузер не выполнит скрипт, не разрешённый политикой,
@@ -610,7 +610,7 @@ Strict-Transport-Security ← принудительный HTTPS
 Referrer-Policy           ← контроль реферера
 ```
 
-### 8.7 Безопасные куки
+### Безопасные куки
 
 Если используешь сессии или refresh-токены в куках:
 
@@ -640,7 +640,7 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
 ```
 
-### 8.8 RLS (Row-Level Security) — PostgreSQL / Supabase
+### RLS (Row-Level Security) — PostgreSQL / Supabase
 
 RLS — это защита на уровне БД: пользователь физически
 не может получить чужие строки, даже если в коде ошибка.
@@ -688,7 +688,7 @@ USING (
 проверок в коде. Проверяй права и в сервисном слое,
 и на уровне БД.
 
-### 8.9 Аудит зависимостей
+### Аудит зависимостей
 
 ```bash
 # Python — проверка CVE в зависимостях
@@ -704,7 +704,7 @@ uv run pip-audit
 
 Добавь в CI/CD — пусть падает при критических уязвимостях.
 
-### 8.10 SQL-инъекции: абсолютный запрет на конкатенацию
+### SQL-инъекции: абсолютный запрет на конкатенацию
 
 ORM защищает от инъекций автоматически. Но когда
 ORM не хватает и ты пишешь raw SQL — **никогда**
@@ -745,7 +745,7 @@ User.objects.raw(
 (пользователь, API, файл) идёт **только** через
 параметры запроса, никогда через конкатенацию.
 
-### 8.11 Безопасность загрузки файлов
+### Безопасность загрузки файлов
 
 Если приложение принимает файлы от пользователей:
 
@@ -798,13 +798,13 @@ def validate_upload(
 
 
 # ❌ ЗАПРЕЩЕНО
-# 1. Доверять расширению файла
-# 2. Сохранять оригинальное имя (path traversal: ../../etc/passwd)
-# 3. Хранить загрузки в static/media, доступном напрямую
-# 4. Не проверять MIME-type по содержимому
+# Доверять расширению файла
+# Сохранять оригинальное имя (path traversal: ../../etc/passwd)
+# Хранить загрузки в static/media, доступном напрямую
+# Не проверять MIME-type по содержимому
 ```
 
-### 8.12 Datetime: всегда timezone-aware
+### Datetime: всегда timezone-aware
 
 Naive datetime (без timezone) — источник багов
 при работе с БД, API и разными серверами.
@@ -833,7 +833,7 @@ local_time = created_at.astimezone(msk)
 Правило: **всё хранится в UTC**, конвертация в локальное
 время — только в слое отображения (шаблоны, ответ API).
 
-### 8.13 Защита от mass-assignment
+### Защита от mass-assignment
 
 Никогда не передавай данные пользователя напрямую
 в модель БД без фильтрации полей:

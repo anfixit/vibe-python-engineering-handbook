@@ -1,4 +1,4 @@
-## 11. FastAPI специфика
+## FastAPI специфика
 
 ```python
 from contextlib import asynccontextmanager
@@ -32,7 +32,7 @@ async def get_current_user(
     return user
 ```
 
-### 11.1 Документация API — автогенерация
+### Документация API — автогенерация
 
 FastAPI генерирует OpenAPI (Swagger / ReDoc) автоматически.
 Но качество документации зависит от того, как ты описываешь

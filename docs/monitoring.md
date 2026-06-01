@@ -1,6 +1,6 @@
-## 23. Health checks и мониторинг
+## Health checks и мониторинг
 
-### 23.1 Health check эндпоинт
+### Health check эндпоинт
 
 Для Docker, Kubernetes и мониторинга — обязательный
 эндпоинт, который проверяет состояние сервиса:
@@ -58,7 +58,7 @@ async def readiness(
     )
 ```
 
-### 23.2 Sentry — error tracking
+### Sentry — error tracking
 
 Sentry автоматически ловит необработанные исключения,
 группирует их и уведомляет. Для продакшна — обязательно.

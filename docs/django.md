@@ -1,6 +1,6 @@
-## 10. Django / DRF специфика
+## Django / DRF специфика
 
-### 10.1 Модели
+### Модели
 
 ```python
 from django.db import models
@@ -36,7 +36,7 @@ class Post(TimestampMixin):
         return self.title[:20]
 ```
 
-### 10.2 Оптимизация запросов
+### Оптимизация запросов
 
 ```python
 # ✅ Один запрос вместо N+1
@@ -57,7 +57,7 @@ Post.objects.bulk_create([
 user_ids = User.objects.values_list('id', flat=True)
 ```
 
-### 10.3 Секреты Django
+### Секреты Django
 
 ```python
 # settings.py

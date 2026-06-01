@@ -1,6 +1,6 @@
-## 22. HTTP-клиенты (httpx)
+## HTTP-клиенты (httpx)
 
-### 22.1 Один клиент на всё приложение
+### Один клиент на всё приложение
 
 ```python
 # Не создавай клиент в каждой функции — утечка соединений
@@ -40,7 +40,7 @@ async def get_http_client(
     return request.app.state.http_client
 ```
 
-### 22.2 Таймауты — всегда, явно
+### Таймауты — всегда, явно
 
 ```python
 # ❌ Без таймаута — может висеть вечно
@@ -56,7 +56,7 @@ timeout = httpx.Timeout(
 response = await client.get(url, timeout=timeout)
 ```
 
-### 22.3 Retry с exponential backoff
+### Retry с exponential backoff
 
 ```python
 # uv add tenacity
@@ -89,7 +89,7 @@ async def fetch_with_retry(
     return response.json()
 ```
 
-### 22.4 Обработка ошибок HTTP
+### Обработка ошибок HTTP
 
 ```python
 from collections.abc import Mapping
@@ -129,7 +129,7 @@ async def call_external_api(
         raise ServiceUnavailableError('Сетевая ошибка.')
 ```
 
-### 22.5 Проверка ответа
+### Проверка ответа
 
 ```python
 # Всегда проверяй структуру ответа перед использованием

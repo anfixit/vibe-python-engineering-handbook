@@ -1,6 +1,6 @@
-## 17. Async: правила и ловушки
+## Async: правила и ловушки
 
-### 17.1 Главное правило
+### Главное правило
 
 **Никаких блокирующих вызовов в async-функциях.**
 Один блокирующий вызов останавливает весь event loop —
@@ -34,7 +34,7 @@ async def wait_and_do() -> None:
     await asyncio.sleep(5)
 ```
 
-### 17.2 Частые блокирующие вызовы, о которых забывают
+### Частые блокирующие вызовы, о которых забывают
 
 ```python
 # ❌ Всё это блокирует event loop:
@@ -45,7 +45,7 @@ time.sleep(n)            # используй asyncio.sleep
 subprocess.run(...)      # используй asyncio.create_subprocess_exec
 ```
 
-### 17.3 Параллельные задачи: `gather` vs последовательно
+### Параллельные задачи: `gather` vs последовательно
 
 ```python
 import asyncio
@@ -80,7 +80,7 @@ for result in results:
         logger.error('Задача упала: %s', result)
 ```
 
-### 17.4 Таймауты — всегда
+### Таймауты — всегда
 
 ```python
 # ❌ Может висеть вечно
@@ -97,7 +97,7 @@ except asyncio.TimeoutError:
     raise ServiceUnavailableError('Сервис не ответил.')
 ```
 
-### 17.5 Правильное создание и отмена задач
+### Правильное создание и отмена задач
 
 ```python
 # ❌ Задача может быть собрана GC до завершения
@@ -111,7 +111,7 @@ background_tasks.add(task)
 task.add_done_callback(background_tasks.discard)
 ```
 
-### 17.6 Async context managers для ресурсов
+### Async context managers для ресурсов
 
 ```python
 # ✅ Соединения всегда через контекстный менеджер
@@ -125,7 +125,7 @@ async with httpx.AsyncClient() as client:
 # приложения (см. раздел lifespan в FastAPI)
 ```
 
-### 17.7 Graceful shutdown
+### Graceful shutdown
 
 Для long-running сервисов (боты, воркеры) важно
 корректно завершать работу — дождаться текущих задач,
@@ -188,9 +188,9 @@ async def main() -> None:
 
 ---
 
-## 18. Транзакции и миграции (Alembic)
+## Транзакции и миграции (Alembic)
 
-### 18.1 Транзакции — явно, всегда
+### Транзакции — явно, всегда
 
 Правило: **всё, что меняет несколько записей, — в транзакции.**
 Если одна операция упала — откатываются все.
@@ -234,7 +234,7 @@ def transfer_funds(from_id, to_id, amount):
 а не `float`. `0.1 + 0.2 != 0.3` с float.
 Подробнее — см. раздел 18.6 «Decimal для денег».
 
-### 18.2 Alembic: настройка
+### Alembic: настройка
 
 ```bash
 uv add alembic sqlalchemy asyncpg
@@ -247,7 +247,7 @@ from myapp.models import Base  # импортируй все модели
 target_metadata = Base.metadata
 ```
 
-### 18.3 Workflow миграций
+### Workflow миграций
 
 ```bash
 # Создать миграцию автоматически (после изменения модели)
@@ -269,7 +269,7 @@ alembic current
 alembic history --verbose
 ```
 
-### 18.4 Правила миграций
+### Правила миграций
 
 ```
 ✅ Миграции только вперёд в продакшне.
@@ -290,7 +290,7 @@ alembic history --verbose
 Шаг 3: alembic upgrade head
 ```
 
-### 18.5 Database connection pooling
+### Database connection pooling
 
 Пул соединений для SQLAlchemy async — настраивай явно:
 
@@ -325,7 +325,7 @@ session_factory = async_sessionmaker(
   в PostgreSQL/MySQL.
 - `echo=True` — **только в dev**, в продакшне выключай.
 
-### 18.6 Decimal для денег
+### Decimal для денег
 
 `float` не подходит для финансовых вычислений.
 `0.1 + 0.2 == 0.30000000000000004` — это не баг Python,
@@ -382,7 +382,7 @@ class ProductCreate(BaseModel):
 Создавай `Decimal` из строк (`Decimal('19.99')`),
 не из float (`Decimal(19.99)` — унаследует неточность).
 
-### 18.7 N+1 в SQLAlchemy
+### N+1 в SQLAlchemy
 
 Django имеет `select_related` / `prefetch_related`.
 В SQLAlchemy async используй `selectinload` / `joinedload`:

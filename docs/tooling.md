@@ -18,7 +18,7 @@
 `requirements.txt` оставляй только если деплоишь
 в среду без выбора (старый CI, хостинг).
 
-### 14.2 `uv` — современный менеджер пакетов
+### `uv` — современный менеджер пакетов
 
 `uv` — замена `pip` + `venv` + `pip-tools`, написанная
 на Rust. Работает в 10–100 раз быстрее `pip`.
@@ -133,7 +133,7 @@ uv add --dev ruff mypy pytest pytest-cov pre-commit
 (см. раздел 14.3). Никаких отдельных `.flake8`, `mypy.ini`,
 `setup.cfg` — всё в одном файле.
 
-### 15.2 Pre-commit хук
+### Pre-commit хук
 
 ```bash
 uv run pre-commit install

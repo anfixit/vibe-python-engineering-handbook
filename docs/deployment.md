@@ -1,6 +1,6 @@
-## 13. Деплой и продакшн
+## Деплой и продакшн
 
-### 13.1 Чеклист перед деплоем
+### Чеклист перед деплоем
 
 - [ ] Секреты: `.env` не в git, значения только из env/.env (см. 3)
 - [ ] `DEBUG=false` в продакшне (см. 3.3)
@@ -18,7 +18,7 @@
 - [ ] Graceful shutdown настроен (см. 17.7)
 - [ ] Смоук-тест на проде: регистрация, логин, ключевые сценарии
 
-### 13.2 Docker
+### Docker
 
 ```dockerfile
 # Dockerfile
@@ -79,7 +79,7 @@ volumes:
 убедись, что `.env` есть в `.gitignore` (см. раздел 3.2)
 и **никогда** не попадает в git.
 
-### 13.3 Systemd-сервис
+### Systemd-сервис
 
 ```ini
 # /etc/systemd/system/mybot.service
@@ -113,7 +113,7 @@ sudo journalctl -u mybot -f  # логи в реальном времени
 файл и передаёт переменные процессу. Файл должен быть
 доступен только `appuser`: `chmod 600 /opt/mybot/.env`.
 
-### 13.4 GitHub Actions CI/CD
+### GitHub Actions CI/CD
 
 ```yaml
 # .github/workflows/deploy.yml
