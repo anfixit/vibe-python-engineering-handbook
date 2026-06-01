@@ -1,0 +1,16 @@
+[project]
+name = "python-engineering-handbook"
+version = "0.1.0"
+description = "Production-grade Python engineering handbook"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 79
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
