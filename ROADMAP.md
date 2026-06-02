@@ -1,38 +1,143 @@
-# Roadmap
+# Roadmap — Python Engineering Handbook
 
-## Version 1.0
+## Стратегия проекта
 
-* [x] Repository created
-* [x] README added
-* [x] Documentation structure created
-* [ ] Style Guide section
-* [ ] Security section
-* [ ] Async section
-* [ ] Architecture section
-* [ ] FastAPI section
-* [ ] Django section
-* [ ] Aiogram section
-* [ ] Deployment section
+Внутри проекта живут **два продукта** на одной кодовой базе.
+Источник всего контента — мастер-файл
+`python_coding_standards_v3_3.md`, разбитый на разделы `docs/`.
 
-## Version 1.1
+**Слой 1 — «Защита от ошибок» (новички).**
+Короткие правила «не делай так → делай так», чеклисты,
+готовые шаблоны и автолинтеры. Главная защита новичка —
+не текст, а инструменты (`ruff`, `mypy`, `pre-commit`)
+и корректные стартер-киты, которые не дают ошибиться.
 
-* [ ] Production examples
-* [ ] FastAPI template
-* [ ] Django template
-* [ ] Aiogram template
-* [ ] Testing guide
+**Слой 2 — «Справочник» (middle / senior).**
+Текущий хендбук как есть: `Protocol`, `TypedDict`,
+cache stampede, идемпотентность, «почему именно так».
+Ничего упрощать не нужно.
 
-## Version 1.2
+**Принцип подачи.** Два уровня на одной странице через
+сворачиваемые блоки MkDocs Material:
 
-* [ ] Docker guide
-* [ ] PostgreSQL guide
-* [ ] Redis guide
-* [ ] CI/CD guide
+```markdown
+!!! danger "Правило"
+    Короткое правило для новичка + пример ✅/❌.
 
-## Version 2.0
+??? note "Почему это важно (для любопытных)"
+    Глубокое объяснение из мастер-файла.
+```
 
-* [ ] GitHub Pages
-* [ ] MkDocs documentation
-* [ ] Contribution guide
-* [ ] Architecture diagrams
-* [ ] Production checklists
+---
+
+## Этап 0. Сверка сборки (блокирующий)
+
+Прежде чем писать новый контент — убедиться, что
+текущая сборка не сломана.
+
+* [ ] Проверить, что все файлы из `nav` (`mkdocs.yml`)
+  реально существуют: `async`, `security`, `git`,
+  `http-clients`, `deployment`, `monitoring`,
+  `caching`, `api-design`
+* [ ] `mkdocs build --strict` проходит без ошибок
+* [ ] GitHub Pages обновляется
+
+**Результат:** сборка зелёная, можно строить дальше.
+
+---
+
+## Этап 1. Инструменты-защита (высший приоритет)
+
+Для новичка это важнее любого текста: ошибки ловятся
+автоматически.
+
+* [ ] `pre-commit` с `ruff` + `ruff-format`
+* [ ] `.pre-commit-config.yaml` в репозитории
+* [ ] CI (GitHub Actions): `ruff`, `mypy`, `pytest`
+* [ ] `pytest-cov` + порог покрытия
+* [ ] Бейджи CI и coverage в README
+
+**Результат:** каждый коммит и PR проверяется
+автоматически.
+
+---
+
+## Этап 2. Готовые шаблоны (стартер-киты)
+
+«Начать проект за 2 минуты» и не ошибиться в структуре.
+
+* [ ] `templates/fastapi` — корректный по умолчанию
+* [ ] `templates/aiogram`
+* [ ] `templates/django`
+* [ ] В каждом: `pyproject.toml`, `pre-commit`,
+  структура `router → service → repository`,
+  `.env.example`, тесты-заглушки
+
+**Результат:** новичок копирует шаблон и сразу пишет
+правильно.
+
+---
+
+## Этап 3. Production-примеры
+
+Рабочий код, который можно скопировать, — лучший учебник
+«как не ошибиться».
+
+* [ ] `examples/fastapi_app` — FastAPI + PostgreSQL +
+  SQLAlchemy 2 + Alembic + JWT + Service/Repository +
+  Docker + тесты
+* [ ] `examples/aiogram_bot`
+* [ ] `examples/django_app`
+
+**Результат:** каждое правило хендбука подтверждено
+рабочим кодом.
+
+---
+
+## Этап 4. Двухуровневая подача в docs
+
+Свести оба продукта в одну документацию.
+
+* [ ] Применить паттерн «Правило + свёрнутое Почему»
+  к ключевым разделам
+* [ ] Чеклисты вынести отдельно: Security, Deployment,
+  Code Review (этап 7 из старого плана)
+* [ ] Material: dark theme, copy button, Mermaid
+
+**Результат:** новичок видит правила, профи раскрывает
+детали — в одном месте.
+
+---
+
+## Этап 5. GitHub-мета и community
+
+Минимум, чтобы проект выглядел как настоящий open-source.
+
+* [ ] `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`
+* [ ] `CHANGELOG.md`, `SECURITY.md`
+* [ ] `.github/ISSUE_TEMPLATE`, `PULL_REQUEST_TEMPLATE`
+
+**Результат:** можно принимать вклад.
+
+---
+
+## Этап 6. Релиз v1.0.0
+
+* [ ] Release Notes + Changelog
+* [ ] Скриншоты документации в README
+* [ ] Раздел «Why this project?»
+
+**Результат:** законченный, узкий, полезный продукт.
+
+---
+
+## Запарковано до v1.0 (scope creep)
+
+Эти пункты — про «стать большим флагманским проектом»,
+а не про цель «код без ошибок». Возвращаемся к ним
+только после v1.0.
+
+* [ ] Английская версия (`docs/en`)
+* [ ] Маркетинг: Reddit, Habr, Dev.to, LinkedIn
+* [ ] Expert-разделы: Kafka, Kubernetes,
+  OpenTelemetry, Prometheus, Grafana, Celery, Redis
