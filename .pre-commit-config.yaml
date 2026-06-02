@@ -1,8 +1,31 @@
+# Pre-commit: ловит ошибки до того, как они попадут в git.
+# Установка (один раз): uv run pre-commit install
+# Прогнать вручную по всем файлам: uv run pre-commit run --all-files
+#
+# mypy здесь намеренно НЕТ: на больших проектах он слишком
+# медленный для хука. Его запускаем в CI (см. ci.yml).
+
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.0
+    rev: v0.8.6
     hooks:
+      # Линтер: автоисправление всего, что можно починить.
       - id: ruff
         args: [--fix]
-
+      # Форматтер: учитывает line-length из [tool.ruff].
       - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # Не дать закоммитить .env, ключи, крупные бинарники.
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      # Гигиена файлов.
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      # Валидность конфигов проекта.
+      - id: check-yaml
+      - id: check-toml

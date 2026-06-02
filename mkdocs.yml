@@ -4,6 +4,24 @@ site_description: Production-grade Python engineering standards and best practic
 theme:
   name: material
   language: ru
+  features:
+    - content.code.copy # кнопка «копировать» на блоках кода
+    - content.code.annotate
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+  palette:
+    # Переключатель светлой/тёмной темы.
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Тёмная тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Светлая тема
 
 plugins:
   - search
@@ -13,8 +31,15 @@ markdown_extensions:
   - toc:
       permalink: true
   - admonition
+  - pymdownx.details # сворачиваемые блоки ??? — двухуровневая подача
   - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
 
 nav:
   - Главная: index.md
